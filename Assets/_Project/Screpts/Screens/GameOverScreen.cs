@@ -21,5 +21,11 @@ namespace _Project.Screpts.Screens
             _audioManager.PlayButtonClick();
             _dialogLauncher.ShowMenuScreen();
         }
+
+        public void RestartGameScreen()
+        {
+            _audioManager.PlayButtonClick();
+            _dialogLauncher.ShowGameScreen();
+        }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Project.Screpts.Instances.Bones;
 using _Project.Screpts.ItemsCounter;
+using _Project.Screpts.Screens;
 using DG.Tweening;
 using UnityEngine;
 
@@ -9,7 +10,8 @@ public class SelectedItemCanvas : MonoBehaviour
 {
     [SerializeField] private List<RectTransform> _positions;
     [SerializeField] private Counter _counter;
-    
+    [SerializeField] private GameScreen _gameScreen;
+
     private List<BaseBone> _selectedBones = new();
     private List<BaseBone> _usedBones = new();
 
@@ -59,7 +61,6 @@ public class SelectedItemCanvas : MonoBehaviour
 
         if (_selectedBones.Count == 4 && !hasPairs)
         {
-           
             foreach (var bone in _selectedBones)
             {
                 Destroy(bone.gameObject);
@@ -71,8 +72,10 @@ public class SelectedItemCanvas : MonoBehaviour
             {
                 bone.gameObject.SetActive(true);
             }
+
             _usedBones.Clear();
             _itemIndex = 0;
+            _gameScreen.ShowGameEndScreen();
         }
     }
 
@@ -88,7 +91,7 @@ public class SelectedItemCanvas : MonoBehaviour
         }
 
         Sequence sequence = DOTween.Sequence();
-        
+
         sequence.Append(rect1.DOScale(Vector3.zero, 0.5f))
             .Join(rect1.DORotate(new Vector3(0, 0, 360), 0.5f, RotateMode.FastBeyond360));
         sequence.Join(rect2.DOScale(Vector3.zero, 0.5f))
@@ -97,10 +100,10 @@ public class SelectedItemCanvas : MonoBehaviour
         sequence.OnComplete(() =>
         {
             Debug.Log($"Уничтожены дубликаты: {bone1.name} и {bone2.name}");
-            
+
             _selectedBones.Remove(bone1);
             _selectedBones.Remove(bone2);
-            
+
             var original1 = _usedBones.FirstOrDefault(b => b.GetType() == bone1.GetType());
             var original2 = _usedBones.FirstOrDefault(b => b.GetType() == bone2.GetType());
 
@@ -115,7 +118,7 @@ public class SelectedItemCanvas : MonoBehaviour
                 _usedBones.Remove(original2);
                 Destroy(original2.gameObject);
             }
-            
+
             Destroy(bone1.gameObject);
             Destroy(bone2.gameObject);
             _counter.RemoveItems();

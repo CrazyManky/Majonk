@@ -964,6 +964,7 @@ MonoBehaviour:
   - {fileID: 4415622595874990769}
   - {fileID: 1363416353639671111}
   _counter: {fileID: 2003947194233563734}
+  _gameScreen: {fileID: 3649253920165775598}
 --- !u!223 &5375604916096848696
 Canvas:
   m_ObjectHideFlags: 0
