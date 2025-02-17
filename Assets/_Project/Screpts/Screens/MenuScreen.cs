@@ -1,9 +1,12 @@
-﻿using UnityEngine.Device;
+﻿using UnityEngine;
+using UnityEngine.Device;
 
 namespace _Project.Screpts.Screens
 {
     public class MenuScreen : BaseScreen
     {
+        [SerializeField] private FactsScreen _factsScreen;
+
         public void OpenSetting()
         {
             AudioManager.PlayButtonClick();
@@ -15,6 +18,12 @@ namespace _Project.Screpts.Screens
             AudioManager.PlayButtonClick();
             Dialog.ShowGameScreen();
         }
+
+        public void ShowFactsScreen()
+        {
+            Instantiate(_factsScreen, transform);
+        }
+
 
         public void AppOut()
         {
